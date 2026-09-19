@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -21,21 +24,26 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             CryptocurrencyAppTheme {
-                Surface(color = MaterialTheme.colorScheme.background) {
-                    val navController = rememberNavController()
-                    NavHost(
-                        navController = navController,
-                        startDestination = Screen.CoinListScreen.route
+                Scaffold { innerPadding ->
+                    Surface(
+                        modifier = Modifier.padding(innerPadding),
+                        color = MaterialTheme.colorScheme.background
                     ) {
-                        composable(
-                            route = Screen.CoinListScreen.route
+                        val navController = rememberNavController()
+                        NavHost(
+                            navController = navController,
+                            startDestination = Screen.CoinListScreen.route
                         ) {
-                            CoinListScreen(navController)
-                        }
-                        composable(
-                            route = Screen.CoinDetailScreen.route + "/{coinId}"
-                        ) {
-                            CoinDetailScreen()
+                            composable(
+                                route = Screen.CoinListScreen.route
+                            ) {
+                                CoinListScreen(navController)
+                            }
+                            composable(
+                                route = Screen.CoinDetailScreen.route + "/{coinId}"
+                            ) {
+                                CoinDetailScreen()
+                            }
                         }
                     }
                 }
